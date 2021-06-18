@@ -16,3 +16,15 @@ Key Questions and Objectives:
 ● Where are customers with a high lifetime value based?
 
 ● Do sales figures vary between geographic regions?
+
+
+Tableau Visualizations:
+
+[top 10 countries for Rockbuster in terms of customer numbers](https://public.tableau.com/app/profile/julian.hempe/viz/top10countriesforRockbusterintermsofcustomernumbers/top10countries)
+
+[top 5 customers in the top 10 counries](https://public.tableau.com/app/profile/julian.hempe/viz/top5customersinthetop10counries/top5customersinthetop10)
+
+[top 10 cities within the top 10 countries](https://public.tableau.com/app/profile/julian.hempe/viz/top10citieswithinthetop10countries/top10cities)
+
+[Customer & Payment Data per Country](https://public.tableau.com/app/profile/julian.hempe/viz/Rockbuster-CustomerPaymentDataperCountry/Sheet1)
+
