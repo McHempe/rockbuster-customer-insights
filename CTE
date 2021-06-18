@@ -1,0 +1,76 @@
+# calculate descriptive statistics for film table
+
+SELECT  MIN(rental_rate) AS min_rent,
+       	MAX(rental_rate) AS max_rent,
+       	ROUND(AVG(rental_rate),2) AS avg_rent,
+       	COUNT(rental_rate) AS count_rent_values,
+       	COUNT(*) AS count_rows,
+       	MIN(release_year) AS min_release_year,
+       	MAX(release_year) AS max_release_year,
+       	ROUND(AVG(release_year)) AS avg_release_year,
+       	COUNT(release_year) AS count_release_year,
+       	COUNT(*) AS count_rows,
+       	MIN(rental_rate) AS min_rental_rate,
+       	MAX(rental_rate) AS max_rental_rate,
+       	ROUND(AVG(rental_rate)) AS avg_rental_rate,
+       	COUNT(rental_rate) AS count_rental_rate,
+       	COUNT(*) AS count_rows,
+       	mode() WITHIN GROUP (ORDER BY rating) AS modal_value,
+       	mode() WITHIN GROUP (ORDER BY title) AS modal_value
+FROM film;
+
+
+# calculate descriptive statistics for customer table
+
+SELECT  MIN(customer_id) AS min_customer_id,
+       	MAX(customer_id) AS max_customer_id,
+       	COUNT(*) AS count_rows,
+       	mode() WITHIN GROUP (ORDER BY first_name)
+ AS modal_value
+FROM customer;
+
+
+# top 10 countries for Rockbuster in terms of customer numbers
+
+SELECT  D.country,
+        COUNT(customer_id) AS customer_count
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+GROUP BY country
+ORDER BY customer_count DESC
+LIMIT 10;
+
+
+# top 10 cities within the top 10 countries
+
+SELECT  C.city,
+        COUNT(customer_id) AS customer_count
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+WHERE country IN('India', 'China', 'United States', 'Japan', 'Mexico', 'Brazil', 'Russian Federation', 'Phillippines', 'Turkey', 'Indonesia')
+GROUP BY city
+ORDER BY customer_count DESC
+LIMIT 10;
+
+
+# top 5 customers in the top 10 cities who have paid the highest total amounts to Rockbuster
+
+SELECT  A.customer_id,
+        A.first_name,
+        A.last_name,
+        D.country,
+        C.city,
+        SUM(E.amount) AS total_amount_paid
+FROM customer A
+INNER JOIN address B on A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+INNER JOIN payment E ON A.customer_id = E.customer_id
+WHERE city IN ('Aurora','Tokat','Tarsus','Atlixco','Emeishan','Pontianak','Shimoga','Aparecida de Goinia','Zalantun','Taguig')
+GROUP BY A.customer_id, A.first_name, A.last_name, D.country, C.city
+ORDER BY total_amount_paid DESC
+LIMIT 5;
